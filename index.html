@@ -8,22 +8,27 @@
     <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="numbers">
-        <button class="one-to-nine" id="one">1</button>
-        <button class="one-to-nine" id="two">2</button>
-        <button class="one-to-nine" id="three">3</button>
-        <button class="one-to-nine" id="four">4</button>
-        <button class="one-to-nine" id="five">5</button>
-        <button class="one-to-nine" id="six">6</button>
-        <button class="one-to-nine" id="seven">7</button>
-        <button class="one-to-nine" id="eight">8</button>
-        <button class="one-to-nine" id="nine">9</button>
-    </div>
-    <div>
-        <button class="operator" id="add">+</button>
-        <button class="operator" id="subtract">-</button>
-        <button class="operator" id="multiply">x</button>
-        <button class="operator" id="divide">÷</button>
+    <div class="calculator">
+        <div id="screen"></div>
+        <div class="numbers">
+            <button class="number" id="one">1</button>
+            <button class="number" id="two">2</button>
+            <button class="number" id="three">3</button>
+            <button class="number" id="four">4</button>
+            <button class="number" id="five">5</button>
+            <button class="number" id="six">6</button>
+            <button class="number" id="seven">7</button>
+            <button class="number" id="eight">8</button>
+            <button class="number" id="nine">9</button>
+        </div>
+        <div class="operators">
+            <button class="operator" id="add">+</button>
+            <button class="operator" id="subtract">-</button>
+            <button class="operator" id="multiply">x</button>
+            <button class="operator" id="divide">÷</button>
+            <button class="equalButton" id="equal">=</button>
+        </div>
+        <button class="clearButton">clear</button>
     </div>
 </body>
 </html>
