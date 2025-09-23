@@ -41,19 +41,32 @@ function operate (num1, num2, operand) {
 }
 
 //display value
-
+let justCalculated = false;
 let display = "";
 
-const screen = document.querySelector('.screen');
+const screen = document.querySelector('#screen');
 
 function updateDisplay() {
-    screen.text = display;
+    if (justCalculated) {
+        screen.textContent = display;  // Just show result
+    } else if (num1 && operand && display) {
+        screen.textContent = `${num1} ${operand} ${display}`;
+    } else if (num1 && operand) {
+        screen.textContent = `${num1} ${operand}`;
+    } else {
+        screen.textContent = display;
+    }
 }
 
 const numberClicked = document.querySelectorAll('.number');
 
 numberClicked.forEach(number => {
     number.addEventListener('click', function (){
+        if (justCalculated){
+            display = "";
+            justCalculated = false;
+        }
+
         display += number.textContent;
         updateDisplay();
     })
@@ -66,15 +79,39 @@ operatorClicked.forEach(op => {
         num1 = display;
         operand = op.textContent;
         display = '';
+
+        operatorClicked.forEach(btn => btn.classList.remove('active-operator'));
+        
+        op.classList.add('active-operator');
     })
 })
 
 const equalButton = document.querySelector('#equal');
 
-
 equalButton.addEventListener('click', function () {
     num2 = display;
     let result = operate(Number(num1), Number(num2), operand);
+
+    if (typeof result === "number"){
+        result = parseFloat(result.toFixed(4));
+    }
+
     display = result.toString();
+    justCalculated = true;
     updateDisplay();
+
+    num1 = display;
+    num2 = '';
+    operand = '';
+})
+
+const clearButton = document.querySelector('.clearButton');
+
+clearButton.addEventListener('click', function (){
+    screen.textContent = "";
+    display = "";
+    num1 = '';
+    num2 = '';
+    operand = '';
+    operatorClicked.forEach(btn => btn.classList.remove('active-operator'));
 })

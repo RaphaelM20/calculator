@@ -6,7 +6,7 @@
 }
 
 body {
-    background: #f0f2f5;
+    background: #121212;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +15,7 @@ body {
 
 
 .calculator {
-    background: #ffffff;
+    background: #1e1e1e;
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -26,13 +26,19 @@ body {
 }
 
 #screen {
-    background-color: #f8f9fa;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 1rem;
+    background-color: #1f1f1f;
+    color: #00ffcc;
     font-size: 2rem;
+    padding: 1rem;
+    border: 2px solid #00ffcc;
+    margin-bottom: 1rem;
+    border-radius: 8px;
     text-align: right;
-    overflow-x: auto;
+    min-height: 60px; 
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .numbers {
@@ -48,10 +54,17 @@ body {
     gap: 0.5rem;
 }
 
+/*Operator background color*/
+.operator.active-operator {
+    background-color: #00ffcc;
+    color: #1f1f1f;
+    font-weight: bold;
+}
+
 .clearButton {
     padding: 1rem;
     font-size: 1.1rem;
-    background: #f44336;
+    background: #d32f2f;
     color: white;
     border: none;
     border-radius: 10px;
@@ -60,7 +73,7 @@ body {
 }
 
 .clearButton:hover {
-    background: #d32f2f;
+    background: #b71c1c;
 }
 
 button {
