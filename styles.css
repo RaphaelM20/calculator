@@ -13,48 +13,71 @@ body {
     height: 100vh;
 }
 
-
 .calculator {
     background: #1e1e1e;
     padding: 2rem;
     border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    display: grid;
-    grid-template-rows: auto auto auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
-    width: 300px;
+    width: 320px;
 }
 
 #screen {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    min-height: 60px;
     background-color: #1f1f1f;
+    border: 2px solid #00ffcc;
+    border-radius: 8px;
     color: #00ffcc;
     font-size: 2rem;
-    padding: 1rem;
-    border: 2px solid #00ffcc;
-    margin-bottom: 1rem;
-    border-radius: 8px;
+}
+
+#screen-text {
+    flex-grow: 1;
     text-align: right;
-    min-height: 60px; 
-    box-sizing: border-box;
+    padding-right: 1rem;
+}
+
+#reaction-face {
+    height: 1.2em;     
+    width: auto;       
+    display: none;
+    margin-left: 8px; 
+}
+
+.buttons-container {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.numbers {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    flex-direction: column;
     gap: 0.5rem;
 }
 
-
-.operators {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+.button-row {
+    display: flex;
     gap: 0.5rem;
 }
 
-/*Operator background color*/
+button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.25rem;
+    border: none;
+    background: #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background: #d6d6d6;
+    transform: scale(1.05);
+}
+
 .operator.active-operator {
     background-color: #00ffcc;
     color: #1f1f1f;
@@ -74,19 +97,4 @@ body {
 
 .clearButton:hover {
     background: #b71c1c;
-}
-
-button {
-    padding: 1rem;
-    font-size: 1.25rem;
-    border: none;
-    background: #e0e0e0;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
-}
-
-button:hover {
-    background: #d6d6d6;
-    transform: scale(1.05);
 }

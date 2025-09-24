@@ -16,7 +16,7 @@ function multiplication (num1, num2) {
 
 function division (num1, num2) {
     if (num2 === 0)
-        return 'Error'
+        return "NaN"
     let result = num1 / num2;
     return result;
 }
@@ -31,12 +31,12 @@ function operate (num1, num2, operand) {
             return addition(num1, num2);
         case '-':
             return subtraction(num1, num2);
-        case '*':
+        case 'x':
             return multiplication(num1, num2);
         case '÷':
             return division(num1, num2);
         default:
-            return 'Invalid Operator';
+            return num1;
     }
 }
 
@@ -44,17 +44,24 @@ function operate (num1, num2, operand) {
 let justCalculated = false;
 let display = "";
 
-const screen = document.querySelector('#screen');
+const screenText = document.querySelector('#screen-text');
+const reactionFace = document.querySelector('#reaction-face');
 
 function updateDisplay() {
     if (justCalculated) {
-        screen.textContent = display;  // Just show result
+        screenText.textContent = display;  // Just show result
     } else if (num1 && operand && display) {
-        screen.textContent = `${num1} ${operand} ${display}`;
+        screenText.textContent = `${num1} ${operand} ${display}`;
     } else if (num1 && operand) {
-        screen.textContent = `${num1} ${operand}`;
+        screenText.textContent = `${num1} ${operand}`;
     } else {
-        screen.textContent = display;
+        screenText.textContent = display;
+    }
+
+    if (display === "NaN") {
+        reactionFace.style.display = "inline-block";
+    } else {
+        reactionFace.style.display = "none";
     }
 }
 
@@ -74,44 +81,76 @@ numberClicked.forEach(number => {
 
 const operatorClicked = document.querySelectorAll('.operator');
 
+let lastOperand = null;
+let lastNum2 = null;
+
 operatorClicked.forEach(op => {
     op.addEventListener('click', function () {
-        num1 = display;
+        if (num1 && operand && display) {
+            let result = operate(Number(num1), Number(display), operand);
+            result = parseFloat(result.toFixed(4));
+            num1 = result.toString();
+            display = '';
+            screenText.textContent = num1;
+        } else {
+            num1 = display;
+            display = '';
+        }
+
         operand = op.textContent;
-        display = '';
 
         operatorClicked.forEach(btn => btn.classList.remove('active-operator'));
-        
         op.classList.add('active-operator');
-    })
-})
+    });
+});
 
 const equalButton = document.querySelector('#equal');
 
 equalButton.addEventListener('click', function () {
+    if (!operand && lastOperand && lastNum2) {
+        let result = operate(Number(num1), Number(lastNum2), lastOperand);
+        result = parseFloat(result.toFixed(4));
+        display = result.toString();
+        screenText.textContent = display;
+        num1 = display;
+        justCalculated = true;
+        return;
+    }
+
+    if (!operand) {
+        if (display === "") display = "0";
+        screenText.textContent = display;
+        justCalculated = true;
+        return;
+    }
+
     num2 = display;
     let result = operate(Number(num1), Number(num2), operand);
 
-    if (typeof result === "number"){
+    if (typeof result === "number") {
         result = parseFloat(result.toFixed(4));
     }
 
     display = result.toString();
+    screenText.textContent = display;
     justCalculated = true;
-    updateDisplay();
+
+    lastOperand = operand;
+    lastNum2 = num2;
 
     num1 = display;
     num2 = '';
     operand = '';
-})
+});
 
 const clearButton = document.querySelector('.clearButton');
 
 clearButton.addEventListener('click', function (){
-    screen.textContent = "";
+    screenText.textContent = "";
     display = "";
     num1 = '';
     num2 = '';
     operand = '';
     operatorClicked.forEach(btn => btn.classList.remove('active-operator'));
+    reactionFace.style.display = "none";
 })
