@@ -15,10 +15,13 @@ function multiplication (num1, num2) {
 }
 
 function division (num1, num2) {
-    if (num2 === 0)
-        return "NaN"
-    let result = num1 / num2;
-    return result;
+    if (num2 === 0) {
+        display = "Nice try."
+        reactionFace.style.display = "inline-block";
+        return NaN;
+    }
+
+    return num1 / num2;
 }
 
 let num1;
@@ -56,12 +59,6 @@ function updateDisplay() {
         screenText.textContent = `${num1} ${operand}`;
     } else {
         screenText.textContent = display;
-    }
-
-    if (display === "NaN") {
-        reactionFace.style.display = "inline-block";
-    } else {
-        reactionFace.style.display = "none";
     }
 }
 
@@ -176,3 +173,54 @@ clearButton.addEventListener('click', function (){
 })
 
 //Keyboard support
+document.addEventListener('keydown', function (e){
+    if (!isNaN(e.key)) {
+        if (justCalculated) {
+            display = "";
+            justCalculated = false;
+        }
+        display += e.key;
+        updateDisplay();
+    }
+
+    else if (['+', '-', '*', '/'].includes(e.key)) {
+        if (num1 && operand && display) {
+            let result = operate(Number(num1), Number(display), operand);
+            result = parseFloat(result.toFixed(4));
+            num1 = result.toString();
+            display = '';
+            screenText.textContent = num1;
+        } 
+        else {
+            num1 = display;
+            display = '';
+        }
+        
+        operand = (e.key === '*') ? 'x' : (e.key === '/') ? '÷' : e.key;
+        operatorClicked.forEach(btn => btn.classList.remove('active-operator'));
+    }
+
+    else if (e.key === 'Enter' || e.key === '=') {
+        equalButton.click(); // reuse your existing logic
+    }
+
+    else if (e.key === 'Backspace') {
+        display = display.slice(0, -1);
+        updateDisplay();
+    }
+
+    else if (e.key === '.') {
+        if (justCalculated) {
+            display = "";
+            justCalculated = false;
+        }
+        if (!display.includes('.')) {
+            display += '.';
+            updateDisplay();
+        }
+    }
+
+     else if (e.key === 'Escape') {
+        clearButton.click(); 
+    }
+})
