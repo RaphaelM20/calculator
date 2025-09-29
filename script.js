@@ -79,6 +79,20 @@ numberClicked.forEach(number => {
     })
 })
 
+const decimalButton = document.querySelector('#decimal');
+
+decimalButton.addEventListener('click', function () {
+    if (justCalculated) {
+        display = "";
+        justCalculated = false;
+    }
+
+    if (!display.includes('.')) {
+        display += '.';
+        updateDisplay();
+    }
+})
+
 const operatorClicked = document.querySelectorAll('.operator');
 
 let lastOperand = null;
@@ -118,7 +132,13 @@ equalButton.addEventListener('click', function () {
     }
 
     if (!operand) {
-        if (display === "") display = "0";
+        if (display === "") {
+            if (num1) {
+                display = num1;
+            } else {
+                display = "0";
+            }
+        }
         screenText.textContent = display;
         justCalculated = true;
         return;
@@ -154,3 +174,5 @@ clearButton.addEventListener('click', function (){
     operatorClicked.forEach(btn => btn.classList.remove('active-operator'));
     reactionFace.style.display = "none";
 })
+
+//Keyboard support
